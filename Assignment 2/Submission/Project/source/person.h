@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+
 // Person object
 struct Person {
     // Person's information
@@ -20,7 +21,7 @@ struct Person {
     }
 
     // Method that copies another Person object's values (if changed/wanted) into this
-    void update(Person *p) {
+    void copy(Person *p) {
         this->name = (p->name.length() > 0) ? p->name : this->name;
         this->dob_day = (p->dob_day == -1) ? this->dob_day : p->dob_day;
         this->dob_month = (p->dob_month == -1) ? this->dob_month : p->dob_month;

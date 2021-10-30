@@ -48,13 +48,16 @@ void RunDatabaseTests(ADT *dDatabase, Person pPeople[25]) {
     dDatabase->List(ADT::POSTORDER);
 
     // Searching - Check
-    std::cout << "\n>>Searching for " << pPeople[23] << "<<\n";
-    std::cout << (dDatabase->Find(&pPeople[23]) ? "Person was located\n" : "Person was not located\n");
+    std::cout << "\n>>Searching for " << pPeople[13] << "<< (exists in db)\n";
+    bool found; // found bool
+    dDatabase->Find(&pPeople[13], found = false); // Put whether or not its found in found
+    std::cout << (found ? "Person was located\n" : "Person was not located\n"); // print if found or not
 
-    std::cout << "\n>>Searching for Gabe Brandt (does not exists in db)<<\n";
     // Create a new person to search for
     Person *gb = new Person("Gabe Brandt", 10, 2, 1980);
-    std::cout << (dDatabase->Find(gb) ? "Person was located\n" : "Person was not located\n");
+    std::cout << "\n>>Searching for " << *gb << " (does not exists in db)<<\n";
+    dDatabase->Find(gb, found = false); // see if its found and store it in found
+    std::cout << (found ? "Person was located\n" : "Person was not located\n"); // print if found or not
     free(gb);
 
     // Removing - Check
@@ -78,9 +81,11 @@ void RunDatabaseTests(ADT *dDatabase, Person pPeople[25]) {
     dDatabase->Search(ADT::DOB, "", ADT::YEAR, 1999);
 
     std::cout << "\n\n>>Changing " << pPeople[5] << "'s name to Kevin Poopy and birth month to December<<\n";
-    Person *kp = new Person("Kevin Poopy", -1, 12, -1);
-    dDatabase->Update(&pPeople[5], kp);
-    delete(kp);
+    Person *kp = new Person(); // Create a new Person
+    kp->copy(&pPeople[5]); // Copy from aarav
+    kp->name = "Kevin Poopy"; // change the name to kevin
+    kp->dob_month = 12; // change the birth month to december
+    dDatabase->Update(&pPeople[5], kp); // Update it
 
     std::cout << "Listing database Inorder\n";
     dDatabase->List(ADT::INORDER);

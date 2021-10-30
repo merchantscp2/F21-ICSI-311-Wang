@@ -1,0 +1,3 @@
+So the search functions and stuff should be in the ADT, not the BST. Anything that isn't clearly generic should. - FIXED
+Also, the modify should repopulate the new node into the proper order (so it should remove the old one and insert the new one)
+    rather than just changing the values which, unless the name is the same, wouldn't be in the same spot. - FIXED

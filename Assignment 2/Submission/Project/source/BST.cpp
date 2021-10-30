@@ -2,83 +2,19 @@
 #include "BST.h"
 #include "person.h"
 
-// Returns whether a data is present in a tree
-template <typename T>
-bool BST<T>::FindData(Node<T> *root, T *data) {
-    // If it's null, quit
-    if(root == nullptr) return false;
-    // If we find one that's the same return true
-    if(root->data == data) return true;
-    // Recursively iterate through the tree to check all instances
-    FindData(root->left, data);
-    FindData(root->right, data);
-}
-
-// Find and print all instances with the same month
-template <typename T>
-void BST<T>::SearchMonth(Node<T> *root, int month) {
-    // If it's null, quit
-    if(root == nullptr) return;
-    // If the month of the node matches the search
-    if(((int)root->data->dob_month) == month)
-        std::cout << *root->data << "; "; // Print it out
-    // Recursively iterate through the tree
-    SearchMonth(root->left, month);
-    SearchMonth(root->right, month);
-}
-
-// Find and print al instances with same birth day
-template <typename T>
-void BST<T>::SearchDay(Node<T> *root, int day) {
-    // If it's null, quit
-    if(root == nullptr) return;
-    // If the data matches the day, print it
-    if(((int)root->data->dob_day) == day)
-        std::cout << *root->data << "; ";
-    // Iterate through all of the tree to check
-    SearchDay(root->left, day);
-    SearchDay(root->right, day);
-}
-
-// Find and print all inscances with same birth year. Same as above
-template <typename T>
-void BST<T>::SearchYear(Node<T> *root, int year) {
-    if(root == nullptr) return;
-    if(((int)root->data->dob_year) == year)
-        std::cout << *root->data << "; ";
-    SearchYear(root->left, year);
-    SearchYear(root->right, year);
-}
-
-// Find and print all instances where the search string is a substring of the name
-// Same logic as above
-template <typename T>
-void BST<T>::SearchName(Node<T> *root, std::string search) {
-    if(root == nullptr) return;
-    if(((std::string)root->data->name).find(search) != std::string::npos)
-        std::cout << *root->data << "; ";
-    SearchName(root->left, search);
-    SearchName(root->right, search);
-}
-
 // Update the node's fields.
 template <typename T>
 void BST<T>::UpdateNode(Node<T> *root, T *data, T *replace) {
-    if(root == nullptr) return; // If null, quit
-    if(root->data == data) { // If we find one that matches
-        root->data->update(replace); // Update the fields
-        return; // Exit
-    }
-    // Recursively check the entire tree
-    UpdateNode(root->left, data, replace);
-    UpdateNode(root->right, data, replace);
+    // Switch the nodes, this preserves the nodes order
+    RemoveNode(root, data); // Remove the current not
+    InsertNode(replace); // insert the replacement
 }
 
 template <typename T>
 Node<T> *BST<T>::RemoveNode(Node<T> *root, T *data) {
     // if the root's null, return the root
     if (root == nullptr) {
-        std::cout << "null root!";
+        //std::cout << "null root!";
         return root;
     }
     // If it's the one we want to delete
